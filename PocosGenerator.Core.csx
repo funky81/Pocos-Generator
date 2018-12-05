@@ -3,9 +3,11 @@
 #r "nuget:Microsoft.Extensions.Configuration.Json,2.1.1"
 #r "nuget:System.Data.Common,4.3.0"
 #r "nuget:System.Data.SqlClient,4.5.1"
+#r "nuget:MySql.Data,8.0.13"
 
 using System.Data;
 using System.Data.Common;
+using MySql.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -158,10 +160,11 @@ public class PocosGenerator {
 	private DbConnection GetDbConnection(){
 		switch (_options.DbType){
 			case DatabaseType.MySql:
+				return new MySql.Data.MySqlClient.MySqlConnection(ConnectionString);
 			case DatabaseType.Oracle:
 			case DatabaseType.PostgreSQL:
 			case DatabaseType.SQL_CE:
-			default: return new SqlConnection(ConnectionString);
+			default: return new System.Data.SqlClient.SqlConnection(ConnectionString);
 		}
 	}
 
